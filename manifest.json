@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Limit Extension",
+  "version": "1.0",
+  "description": "Limits the number of open tabs per domain and allows configuration via a popup GUI.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+        "16": "icon-16.png",
+        "48": "icon-48.png",
+        "128": "icon-128.png"
+    }
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": ["<all_urls>"]
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Limit Settings</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      box-sizing: border-box;
+      margin-top: 4px;
+    }
+
+    .domain-entry {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .domain-entry input[type="text"] {
+      flex: 2;
+    }
+
+    .domain-entry input[type="number"] {
+      flex: 1;
+    }
+
+    .domain-entry button {
+      flex: 0;
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .domain-entry button:hover {
+      background-color: #dc2626;
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      padding: 10px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #addDomain {
+      background-color: #e5e7eb;
+      color: #111827;
+    }
+
+    #addDomain:hover {
+      background-color: #d1d5db;
+    }
+
+    #saveSettings {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    #saveSettings:hover {
+      background-color: #1d4ed8;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .vue-green {
+      color: #42b883;
+      font-weight: 600;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Tab Limit Settings</h1>
+
+    <div>
+      <label for="defaultLimit">Default Tab Limit</label>
+      <input type="number" id="defaultLimit" min="1" value="3">
+    </div>
+
+    <h2>Custom Domain Limits</h2>
+    <div id="customLimitsList">
+      <!-- Custom domain entries rendered via JS -->
+    </div>
+
+    <div class="actions">
+      <button id="addDomain" class="action_add">Add Domain Limit</button>
+      <button id="saveSettings" class="action_save">Save Settings</button>
+    </div>
+  </div>
+
+  <footer>
+    Developed by
+    <a href="https://sulton.dev/" target="_blank" rel="noopener">
+      <span class="vue-green">sultondev</span>
+    </a>
+    <br />
+    &copy; 2025
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
