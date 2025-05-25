@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Tab Limit Extension",
-  "version": "1.0",
+  "name": "Tab Limiter – Tab Manager & Domain Control",
+  "version": "1.1",
   "description": "Limits the number of open tabs per domain and allows configuration via a popup GUI.",
   "background": {
     "service_worker": "background.js"

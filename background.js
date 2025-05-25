@@ -17,7 +17,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   
       // Retrieve the current settings from storage.
       chrome.storage.sync.get(
-        { defaultLimit: 3, customLimits: { "coursera.org": 5 } },
+        { defaultLimit: 10, customLimits: { "youtube.com": 5 } },
         (settings) => {
           const defaultLimit = settings.defaultLimit;
           const customLimits = settings.customLimits;

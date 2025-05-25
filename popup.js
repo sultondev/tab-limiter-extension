@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load settings from storage and update the UI.
     function loadSettings() {
       chrome.storage.sync.get(
-        { defaultLimit: 3, customLimits: { "coursera.org": 5 } },
+        { defaultLimit: 10, customLimits: { "youtube.com": 5 } },
         (settings) => {
           defaultLimitInput.value = settings.defaultLimit;
           customLimitsList.innerHTML = '';
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     // Create a new row for a custom domain limit.
-    function addCustomLimitRow(domain = '', limit = 3) {
+    function addCustomLimitRow(domain = '', limit = 10) {
       const div = document.createElement('div');
       div.className = 'domain-entry';
   
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Save settings back to storage.
     saveSettingsButton.addEventListener('click', () => {
-      const newDefaultLimit = parseInt(defaultLimitInput.value) || 3;
+      const newDefaultLimit = parseInt(defaultLimitInput.value) || 5;
       const newCustomLimits = {};
       const domainEntries = customLimitsList.getElementsByClassName('domain-entry');
   
