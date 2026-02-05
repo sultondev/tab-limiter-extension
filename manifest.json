@@ -1,23 +1,35 @@
 {
   "manifest_version": 3,
   "name": "Tab Limiter – Tab Manager & Domain Control",
-  "version": "1.1",
-  "description": "Limits the number of open tabs per domain and allows configuration via a popup GUI.",
+  "version": "1.3",
+  "description": "Limits the number of open tabs per domain with auto-close warnings and URL blocking.",
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-        "16": "icon-16.png",
-        "48": "icon-48.png",
-        "128": "icon-128.png"
+      "16": "icon-16.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
     }
   },
+  "options_page": "settings.html",
   "permissions": [
     "tabs",
     "storage",
     "notifications"
   ],
-  "host_permissions": ["<all_urls>"]
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["warning.html", "warning.js", "blocked.html", "blocked.js", "settings.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  }
 }

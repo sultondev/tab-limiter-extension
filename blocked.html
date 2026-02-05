@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>URL Blocked</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blocked-container {
+            background: white;
+            padding: 48px;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blocked-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            color: #dc2626;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .blocked-url {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 20px 0;
+            word-break: break-all;
+            border: 2px solid #fecaca;
+        }
+
+        p {
+            color: #4b5563;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #111827;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        .footer-note {
+            margin-top: 32px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .emoji-shake {
+            display: inline-block;
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="blocked-container">
+    <div class="blocked-icon">
+        <span class="emoji-shake">🚫</span>
+    </div>
+    <h1>Access Blocked</h1>
+    <p>This URL has been blocked by your Tab Limiter settings to help you stay focused.</p>
+
+    <div class="blocked-url" id="blockedUrl">
+        Loading...
+    </div>
+
+    <div class="button-group">
+        <button class="btn-primary" id="goBack">← Go Back</button>
+        <button class="btn-secondary" id="openSettings">Settings</button>
+    </div>
+
+    <div class="footer-note">
+        💡 Tip: You can manage blocked URLs in the extension settings
+    </div>
+</div>
+
+<script src="blocked.js"></script>
+</body>
+</html>

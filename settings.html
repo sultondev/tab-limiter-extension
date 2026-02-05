@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tab Limiter Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            font-size: 28px;
+        }
+
+        .section-title {
+            flex: 1;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .section-title p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .form-help {
+            display: block;
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="file"] {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 16px;
+        }
+
+        .toggle-info {
+            flex: 1;
+        }
+
+        .toggle-info strong {
+            display: block;
+            color: #111827;
+            margin-bottom: 4px;
+            font-size: 15px;
+        }
+
+        .toggle-info span {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(28px);
+        }
+
+        .list-container {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .list-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .list-item input[type="text"] {
+            flex: 2;
+        }
+
+        .list-item input[type="number"] {
+            flex: 1;
+        }
+
+        .list-item-single input[type="text"] {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .btn-remove {
+            background-color: #ef4444;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .btn-remove:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .btn-add {
+            background-color: #e5e7eb;
+            color: #111827;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .btn-add:hover {
+            background-color: #d1d5db;
+        }
+
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-info {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #9ca3af;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .footer {
+            background: #f9fafb;
+            padding: 24px 32px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease-out;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .danger-zone {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .danger-zone h3 {
+            color: #dc2626;
+            margin-bottom: 12px;
+        }
+
+        .danger-zone p {
+            color: #991b1b;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .btn-danger {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .export-import-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .export-card, .import-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .export-card h3, .import-card h3 {
+            font-size: 18px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .export-card p, .import-card p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .file-info {
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #92400e;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .export-import-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>⚙️ Tab Limiter Settings</h1>
+        <p>Configure your tab management preferences</p>
+    </div>
+
+    <div class="content">
+        <!-- Statistics Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <div class="section-title">
+                    <h2>Statistics</h2>
+                    <p>Overview of your current configuration</p>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statDefaultLimit">10</div>
+                    <div class="stat-label">Default Tab Limit</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statCustomDomains">0</div>
+                    <div class="stat-label">Custom Domains</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statBlockedUrls">0</div>
+                    <div class="stat-label">Blocked URLs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Settings -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <div class="section-title">
+                    <h2>General Settings</h2>
+                    <p>Basic tab limiting configuration</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="defaultLimit">Default Tab Limit</label>
+                <input type="number" id="defaultLimit" min="1" max="100" value="10" placeholder="Enter default limit">
+                <span class="form-help">Maximum number of tabs allowed per domain by default</span>
+            </div>
+
+            <div class="toggle-container">
+                <div class="toggle-info">
+                    <strong>Auto-close Extra Tabs</strong>
+                    <span>Show a 6-second warning before closing excess tabs</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="autoCloseEnabled">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Custom Domain Limits -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🌐</span>
+                <div class="section-title">
+                    <h2>Custom Domain Limits</h2>
+                    <p>Set specific tab limits for individual domains</p>
+                </div>
+                <span class="badge" id="domainCount">0 domains</span>
+            </div>
+
+            <div class="list-container" id="customLimitsContainer">
+                <div class="empty-state" id="emptyDomains">
+                    <div class="empty-state-icon">📝</div>
+                    <p>No custom domain limits configured</p>
+                </div>
+                <div id="customLimitsList"></div>
+            </div>
+            <button class="btn btn-add" id="addDomain">+ Add Domain Limit</button>
+        </div>
+
+        <!-- Blocked URLs -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🚫</span>
+                <div class="section-title">
+                    <h2>Blocked URLs</h2>
+                    <p>Completely block access to specific URLs or patterns</p>
+                </div>
+                <span class="badge" id="blockedCount">0 blocked</span>
+            </div>
+
+            <div class="list-container" id="blockedUrlsContainer">
+                <div class="empty-state" id="emptyBlocked">
+                    <div class="empty-state-icon">✨</div>
+                    <p>No URLs blocked yet</p>
+                </div>
+                <div id="blockedUrlsList"></div>
+            </div>
+            <button class="btn btn-add" id="addBlockedUrl">+ Add Blocked URL</button>
+
+            <div class="form-help" style="margin-top: 16px; padding: 12px; background: #fffbeb; border-radius: 6px; border: 1px solid #fde68a;">
+                💡 <strong>Examples:</strong> youtube.com/shorts, twitter.com, reddit.com/r/all, facebook.com/watch
+            </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚡</span>
+                <div class="section-title">
+                    <h2>Advanced Settings</h2>
+                    <p>Additional configuration options</p>
+                </div>
+            </div>
+
+            <div class="toggle-container">
+                <div class="toggle-info">
+                    <strong>Show Notifications</strong>
+                    <span>Display notifications when tabs are limited or blocked</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notificationsEnabled" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="autoCloseDelay">Auto-close Delay (seconds)</label>
+                <input type="number" id="autoCloseDelay" min="3" max="30" value="6" placeholder="6">
+                <span class="form-help">Countdown time before auto-closing excess tabs</span>
+            </div>
+        </div>
+
+        <!-- Export/Import Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">💾</span>
+                <div class="section-title">
+                    <h2>Backup & Restore</h2>
+                    <p>Export your settings to use on another device or create a backup</p>
+                </div>
+            </div>
+
+            <div class="export-import-grid">
+                <div class="export-card">
+                    <h3>📤 Export Settings</h3>
+                    <p>Download your current configuration as a JSON file</p>
+                    <button class="btn btn-success" id="exportSettings">
+                        📥 Export Data
+                    </button>
+                    <div class="file-info">
+                        Exports: limits, blocked URLs, and all preferences
+                    </div>
+                </div>
+
+                <div class="import-card">
+                    <h3>📥 Import Settings</h3>
+                    <p>Restore settings from a previously exported file</p>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button class="btn btn-info" id="importSettings">
+                        📤 Import Data
+                    </button>
+                    <div class="file-info">
+                        Note: This will overwrite your current settings
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="section">
+            <div class="danger-zone">
+                <h3>⚠️ Danger Zone</h3>
+                <p>Resetting will remove all your custom settings and restore defaults.</p>
+                <button class="btn btn-danger" id="resetSettings">Reset All Settings</button>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <button class="btn btn-primary" id="saveSettings">💾 Save All Settings</button>
+    </div>
+
+    <div class="footer">
+        Developed by <a href="https://sulton.dev/" target="_blank" rel="noopener">sultondev</a> &copy; 2025
+        <br>
+        <span style="margin-top: 8px; display: block; font-size: 12px;">Version 1.3</span>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+    <span style="font-size: 20px;" id="toastIcon">✅</span>
+    <span id="toastMessage">Settings saved successfully!</span>
+</div>
+
+<script src="settings.js"></script>
+</body>
+</html>

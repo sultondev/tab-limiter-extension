@@ -2,160 +2,157 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Tab Limit Settings</title>
+  <title>Tab Limiter</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
       width: 320px;
       margin: 0;
-      padding: 16px;
-      background-color: #f9fafb;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
-    h1 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-    }
-
-    h2 {
-      font-size: 1rem;
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }
-
-    label {
-      font-weight: 500;
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
-      box-sizing: border-box;
-      margin-top: 4px;
-    }
-
-    .domain-entry {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-      align-items: center;
-    }
-
-    .domain-entry input[type="text"] {
-      flex: 2;
-    }
-
-    .domain-entry input[type="number"] {
-      flex: 1;
-    }
-
-    .domain-entry button {
-      flex: 0;
-      background-color: #ef4444;
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .domain-entry button:hover {
-      background-color: #dc2626;
-    }
-
-    .actions {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    button {
-      padding: 10px;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #addDomain {
-      background-color: #e5e7eb;
-      color: #111827;
-    }
-
-    #addDomain:hover {
-      background-color: #d1d5db;
-    }
-
-    #saveSettings {
-      background-color: #2563eb;
-      color: white;
-    }
-
-    #saveSettings:hover {
-      background-color: #1d4ed8;
-    }
-
-    footer {
-      margin-top: 24px;
-      font-size: 0.85rem;
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
       text-align: center;
+      border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .header h1 {
+      font-size: 20px;
+      margin: 0 0 8px 0;
+      color: #111827;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 13px;
       color: #6b7280;
     }
 
-    .vue-green {
-      color: #42b883;
+    .quick-stats {
+      background: white;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 2px solid #e5e7eb;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .actions {
+      background: white;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
       font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    footer a {
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      border-top: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .footer a {
+      color: #667eea;
       text-decoration: none;
-      color: inherit;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>Tab Limit Settings</h1>
+<div class="header">
+  <h1>⚡ Tab Limiter</h1>
+  <p>Stay focused, stay productive</p>
+</div>
 
-    <div>
-      <label for="defaultLimit">Default Tab Limit</label>
-      <input type="number" id="defaultLimit" min="1" value="3">
-    </div>
-
-    <h2>Custom Domain Limits</h2>
-    <div id="customLimitsList">
-      <!-- Custom domain entries rendered via JS -->
-    </div>
-
-    <div class="actions">
-      <button id="addDomain" class="action_add">Add Domain Limit</button>
-      <button id="saveSettings" class="action_save">Save Settings</button>
-    </div>
+<div class="quick-stats">
+  <div class="stat-box">
+    <div class="stat-value" id="quickDefaultLimit">10</div>
+    <div class="stat-label">Default</div>
   </div>
+  <div class="stat-box">
+    <div class="stat-value" id="quickCustomDomains">0</div>
+    <div class="stat-label">Domains</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value" id="quickBlockedUrls">0</div>
+    <div class="stat-label">Blocked</div>
+  </div>
+</div>
 
-  <footer>
-    Developed by
-    <a href="https://sulton.dev/" target="_blank" rel="noopener">
-      <span class="vue-green">sultondev</span>
-    </a>
-    <br />
-    &copy; 2025
-  </footer>
+<div class="actions">
+  <button class="btn btn-primary" id="openSettings">
+    ⚙️ Open Settings
+  </button>
+  <button class="btn btn-secondary" id="quickToggle">
+    <span id="toggleIcon">🔴</span>
+    <span id="toggleText">Extension Disabled</span>
+  </button>
+</div>
 
-  <script src="popup.js"></script>
+<div class="footer">
+  by <a href="https://sulton.dev/" target="_blank">sultondev</a> © 2025
+</div>
+
+<script src="popup-quick.js"></script>
 </body>
 </html>
